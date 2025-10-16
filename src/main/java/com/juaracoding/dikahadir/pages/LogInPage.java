@@ -1,34 +1,28 @@
 package com.juaracoding.dikahadir.pages;
 
 import java.time.Duration;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LogInPage {
-    //Locator
+    // Locator
     private By username = By.id("email");
     private By password = By.id("password");
     private By loginButton = By.xpath("//button[@type='submit']");
     private WebDriver driver;
     private WebDriverWait wait;
-    private JavascriptExecutor js;
-    private WebElement element;
 
-    //Constructor
+    // Constructor
 
     public LogInPage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(this.driver, Duration.ofSeconds(60));
-        js = (JavascriptExecutor) driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    //Method
+    // Method
+
     public void fillUsername(String username) {
         driver.findElement(this.username).sendKeys(username);
     }
@@ -49,5 +43,7 @@ public class LogInPage {
         fillUsername(username);
         fillPassword(password);
         clickLoginButton();
+        // Menunggu sampai URL berubah ke halaman dashboard setelah login
+        wait.until(ExpectedConditions.urlToBe("https://magang.dikahadir.com/dashboards/pending"));
     }
 }
