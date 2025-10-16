@@ -50,8 +50,4 @@ public class LogInPage {
         fillPassword(password);
         clickLoginButton();
     }
-
-    public String getNextURL() {
-        return driver.getCurrentUrl();
-    }
 }
