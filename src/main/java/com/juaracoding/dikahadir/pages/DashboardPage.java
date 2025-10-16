@@ -4,44 +4,53 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class DashboardPage {
+    public DashboardPage() {
+    }
+
     private WebDriver driver;
 
     // Main Menus
-    private By buttonMenuManagement = By
+    public By buttonMenuManagement = By
             .xpath("//p[text()='Management']/ancestor::div[contains(@class, 'sidebar__wrapper')]");
-    private By buttonMenuLaporan = By
+    public By buttonMenuLaporan = By
             .xpath("//p[text()='Laporan']/ancestor::div[contains(@class, 'sidebar__wrapper')]");
 
     // Management Sub-Menus
-    private By subMenuPosisi = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Posisi']");
-    private By subMenuAbsenPoint = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Absen Point']");
-    private By subMenuJabatan = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Jabatan']");
-    private By subMenuShifting = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Shifting']");
-    private By subMenuJadwal = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Jadwal']");
-    private By subMenuKalender = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Kalender']");
-    private By subMenuDayOff = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Day Off']");
+    public By subMenuPosisi = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Posisi']");
+    public By subMenuAbsenPoint = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Absen Point']");
+    public By subMenuJabatan = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Jabatan']");
+    public By subMenuShifting = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Shifting']");
+    public By subMenuJadwal = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Jadwal']");
+    public By subMenuKalender = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Kalender']");
+    public By subMenuDayOff = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Day Off']");
 
     // Laporan Sub-Menus
-    private By subMenuLaporanSemua = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Semua']");
-    private By subMenuLaporanKehadiran = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Kehadiran']");
-    private By subMenuLaporanIzinTerlambat = By
+    public By subMenuLaporanSemua = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Semua']");
+    public By subMenuLaporanKehadiran = By.xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Kehadiran']");
+    public By subMenuLaporanIzinTerlambat = By
             .xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Izin Terlambat']");
-    private By subMenuLaporanPulangCepat = By
+    public By subMenuLaporanPulangCepat = By
             .xpath("//div[contains(@class, 'MuiCollapse-root')]//p[text()='Pulang Cepat']");
 
     // Elemen Umum
-    private By searchBar = By.xpath("//input[@placeholder='Search']");
-    private By searchButton = By.xpath("//button[normalize-space()='Search']");
+    public By searchBar = By.xpath("//input[@placeholder='Search']");
+    public By searchButton = By.xpath("//button[normalize-space()='Search']");
+    public By resetButton = By.xpath("//button[normalize-space()='Reset']");
+    public By tambahButton = By.xpath("//button[normalize-space()='Tambahkan']");
+
+    // Tombol di dalam menu aksi (setelah klik ikon tiga titik)
+    public By actionEdit = By.xpath("//li[normalize-space()='Edit']");
+    public By actionDelete = By.xpath("//li[normalize-space()='Delete']");
 
     // Kontrol Halaman (Pagination)
-    private By nextPageButton = By.xpath("//button[@aria-label='Go to next page']");
-    private By previousPageButton = By.xpath("//button[@aria-label='Go to previous page']");
-   
-    private By specificPageButton(int pageNumber) {
+    public By nextPageButton = By.xpath("//button[@aria-label='Go to next page']");
+    public By previousPageButton = By.xpath("//button[@aria-label='Go to previous page']");
+
+    public By specificPageButton(int pageNumber) {
         return By.xpath("//button[@aria-label='Go to page " + pageNumber + "']");
     }
 
-    private By rowsPerPageDropdown = By
+    public By rowsPerPageDropdown = By
             .xpath("//div[contains(@class, 'MuiTablePagination-selectLabel')]/following-sibling::div");
 
     public DashboardPage(WebDriver driver) {
