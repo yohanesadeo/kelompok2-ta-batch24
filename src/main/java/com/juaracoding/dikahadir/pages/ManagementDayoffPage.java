@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-public class ManagementDayoffPage {
+public class ManagementDayOffPage {
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -18,7 +18,7 @@ public class ManagementDayoffPage {
     public By successMessage = By.xpath("//div[contains(@class, 'MuiAlert-message')]");
 
     // ================== CONSTRUCTOR ==================
-    public ManagementDayoffPage(WebDriver driver) {
+    public ManagementDayOffPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         this.dashboardPage = new DashboardPage();
