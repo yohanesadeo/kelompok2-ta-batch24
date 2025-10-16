@@ -1,14 +1,20 @@
 package com.juaracoding.dikahadir.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashboardPage {
     public DashboardPage() {
     }
+    
 
     private WebDriver driver;
-
+    private WebDriverWait wait;
+    
     // Main Menus
     public By buttonMenuManagement = By
             .xpath("//p[text()='Management']/ancestor::div[contains(@class, 'sidebar__wrapper')]");
@@ -55,82 +61,83 @@ public class DashboardPage {
 
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public void clickButtonMenuManagement() {
-        driver.findElement(buttonMenuManagement).click();
+        wait.until(ExpectedConditions.elementToBeClickable(buttonMenuManagement)).click();
     }
 
     public void clickSubMenuPosisi() {
-        driver.findElement(subMenuPosisi).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuPosisi)).click();
     }
 
     public void clickSubMenuAbsenPoint() {
-        driver.findElement(subMenuAbsenPoint).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuAbsenPoint)).click();
     }
 
     public void clickSubMenuJabatan() {
-        driver.findElement(subMenuJabatan).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuJabatan)).click();
     }
 
     public void clickSubMenuShifting() {
-        driver.findElement(subMenuShifting).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuShifting)).click();
     }
 
     public void clickSubMenuJadwal() {
-        driver.findElement(subMenuJadwal).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuJadwal)).click();
     }
 
     public void clickSubMenuKalender() {
-        driver.findElement(subMenuKalender).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuKalender)).click();
     }
 
     public void clickSubMenuDayOff() {
-        driver.findElement(subMenuDayOff).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuDayOff)).click();
     }
 
     public void clickButtonMenuLaporan() {
-        driver.findElement(buttonMenuLaporan).click();
+        wait.until(ExpectedConditions.elementToBeClickable(buttonMenuLaporan)).click();
     }
 
     public void clickSubMenuLaporanSemua() {
-        driver.findElement(subMenuLaporanSemua).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuLaporanSemua)).click();
     }
 
     public void clickSubMenuLaporanKehadiran() {
-        driver.findElement(subMenuLaporanKehadiran).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuLaporanKehadiran)).click();
     }
 
     public void clickSubMenuLaporanIzinTerlambat() {
-        driver.findElement(subMenuLaporanIzinTerlambat).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuLaporanIzinTerlambat)).click();
     }
 
     public void clickSubMenuLaporanPulangCepat() {
-        driver.findElement(subMenuLaporanPulangCepat).click();
+        wait.until(ExpectedConditions.elementToBeClickable(subMenuLaporanPulangCepat)).click();    
     }
 
     public void fillSearchBar(String text) {
-        driver.findElement(searchBar).sendKeys(text);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchBar)).sendKeys(text);
     }
 
     public void clickSearchButton() {
-        driver.findElement(searchButton).click();
+        wait.until(ExpectedConditions.elementToBeClickable(searchButton)).click();
     }
 
     public void clickNextPageButton() {
-        driver.findElement(nextPageButton).click();
+        wait.until(ExpectedConditions.elementToBeClickable(nextPageButton)).click();
     }
 
     public void clickPreviousPageButton() {
-        driver.findElement(previousPageButton).click();
+        wait.until(ExpectedConditions.elementToBeClickable(previousPageButton)).click();
     }
 
     public void clickSpecificPageButton(int pageNumber) {
-        driver.findElement(specificPageButton(pageNumber)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(specificPageButton(pageNumber))).click();
     }
 
     public void selectRowsPerPage(String rowsPerPage) {
-        driver.findElement(rowsPerPageDropdown).click();
+        wait.until(ExpectedConditions.elementToBeClickable(rowsPerPageDropdown)).click();
         driver.findElement(By.xpath("//li[text()='" + rowsPerPage + "']")).click();
     }
 }
