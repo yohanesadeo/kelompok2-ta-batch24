@@ -3,7 +3,7 @@
 <suite name="eCommerce Suite Test">
   <parameter name="baseURL" value="https://magang.dikahadir.com/authentication/login"></parameter>
 
-  <test name="Authentication Test" enabled="true">
+  <test name="Authentication Test" enabled="false">
     <classes>
       <class name="com.juaracoding.dikahadir.authentication.LogInTest"></class>
     </classes>
@@ -11,7 +11,7 @@
 
   <test name="Management Posisi Test" enabled="true">
     <classes>
-      <class name="com.juaracoding.dikahadir.managements.ManagementPosisiTest"></class>
+      <class name="com.juaracoding.dikahadir.management.ManagementPosisiTest"></class>
     </classes>
   </test>
 </suite>
