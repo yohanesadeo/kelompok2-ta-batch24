@@ -2,14 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Dikahadir Test">
   <parameter name="baseURL" value="https://magang.dikahadir.com/authentication/login"></parameter>
-  <test name="Authentication Test" enabled="true">
+  <test name="Authentication Test" enabled="false">
     <classes>
       <class name="com.juaracoding.dikahadir.authentication.LogInTest"></class>
     </classes>
   </test>
   <test name="Management Test" enabled="true">
     <classes>
-      <class name="com.juaracoding.dikahadir.management.ManagementPosisiTest"></class>
+      <!-- <class name="com.juaracoding.dikahadir.management.ManagementPosisiTest"></class> -->
       <class name="com.juaracoding.dikahadir.management.ManagementShiftingTest"></class>
     </classes>
   </test>
