@@ -22,7 +22,7 @@ public class ManagementPosisiPage {
     public ManagementPosisiPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        this.dashboardPage = new DashboardPage();
+        this.dashboardPage = new DashboardPage(driver);
     }
 
     // ================== PAGE ACTIONS / METHODS ==================
@@ -37,7 +37,8 @@ public class ManagementPosisiPage {
     }
 
     public void clickSearchButton() {
-        driver.findElement(dashboardPage.searchButton).click();
+        // Panggil metode dari dashboardPage untuk konsistensi dan keamanan
+        dashboardPage.clickSearchButton();
     }
 
     public void clickTambahButton() {

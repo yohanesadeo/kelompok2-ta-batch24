@@ -17,13 +17,13 @@ public class ManagementAbsenPointPage {
     private By headerTitle = By.xpath("//h4[contains(text(), 'Absen Point')]");
 
     // Elemen Aksi Utama
-    private By searchBar = dashboardPage.searchBar;
-    private By searchButton = dashboardPage.searchButton;
+    private By searchBar; // Akan diinisialisasi melalui dashboardPage
+    private By searchButton; // Akan diinisialisasi melalui dashboardPage
     private By tambahButton = By.xpath("//button[contains(., 'Tambah Absen Point')]");
 
     // Kontrol Halaman (Pagination)
-    private By nextPageButton = dashboardPage.nextPageButton;
-    private By previousPageButton = dashboardPage.previousPageButton;
+    private By nextPageButton; // Akan diinisialisasi melalui dashboardPage
+    private By previousPageButton; // Akan diinisialisasi melalui dashboardPage
 
     // Notifikasi/Alert
     private By successMessage = By.xpath("//div[contains(@class, 'MuiAlert-message')]");
@@ -31,6 +31,12 @@ public class ManagementAbsenPointPage {
     public ManagementAbsenPointPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.dashboardPage = new DashboardPage(driver);
+        // Inisialisasi locator yang bergantung pada dashboardPage
+        this.searchBar = dashboardPage.searchBar;
+        this.searchButton = dashboardPage.searchButton;
+        this.nextPageButton = dashboardPage.nextPageButton;
+        this.previousPageButton = dashboardPage.previousPageButton;
     }
 
     public String getHeaderTitle() {
@@ -38,13 +44,13 @@ public class ManagementAbsenPointPage {
     }
 
     public void inputSearch(String keyword) {
-        WebElement searchInput = driver.findElement(searchBar);
+        WebElement searchInput = wait.until(ExpectedConditions.visibilityOfElementLocated(searchBar));
         searchInput.clear();
         searchInput.sendKeys(keyword);
     }
 
     public void clickSearchButton() {
-        driver.findElement(searchButton).click();
+        wait.until(ExpectedConditions.elementToBeClickable(searchButton)).click();
     }
 
     public void clickTambahButton() {

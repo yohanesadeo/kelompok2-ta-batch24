@@ -22,7 +22,7 @@ public class ManagementJabatanPage {
     public ManagementJabatanPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        this.dashboardPage = new DashboardPage();
+        this.dashboardPage = new DashboardPage(driver);
     }
 
     // ================== PAGE ACTIONS / METHODS ==================
@@ -37,7 +37,8 @@ public class ManagementJabatanPage {
     }
 
     public void clickSearchButton() {
-        driver.findElement(dashboardPage.searchButton).click();
+        // Lebih aman memanggil metode dari dashboardPage yang sudah memiliki wait
+        dashboardPage.clickSearchButton();
     }
 
     public void clickTambahButton() {

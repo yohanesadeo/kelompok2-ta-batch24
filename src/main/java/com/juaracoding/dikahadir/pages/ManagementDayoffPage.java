@@ -21,7 +21,7 @@ public class ManagementDayOffPage {
     public ManagementDayOffPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        this.dashboardPage = new DashboardPage();
+        this.dashboardPage = new DashboardPage(driver);
     }
 
     // ================== PAGE ACTIONS / METHODS ==================
