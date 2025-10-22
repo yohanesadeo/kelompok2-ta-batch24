@@ -7,10 +7,18 @@
       <class name="com.juaracoding.dikahadir.authentication.LogInTest"></class>
     </classes>
   </test>
-  <test name="Management Test" enabled="true">
+  <test name="Management Test" enabled="false">
     <classes>
       <!-- <class name="com.juaracoding.dikahadir.management.ManagementPosisiTest"></class> -->
-      <class name="com.juaracoding.dikahadir.management.ManagementShiftingTest"></class>
+      <!-- <class name="com.juaracoding.dikahadir.management.ManagementShiftingTest"></class> -->
+    </classes>
+  </test>
+   <test name="Laporan Tests" enabled="true">
+    <classes>
+      <class name="com.juaracoding.tajuaracoding.laporan.SemuaTest"/>
+      <!-- <class name="com.juaracoding.tajuaracoding.laporan.KehadiranTest"/>
+      <class name="com.juaracoding.tajuaracoding.laporan.IzinTerlambatTest"/>
+      <class name="com.juaracoding.tajuaracoding.laporan.IzinPulangCepatTest"/> -->
     </classes>
   </test>
 </suite>

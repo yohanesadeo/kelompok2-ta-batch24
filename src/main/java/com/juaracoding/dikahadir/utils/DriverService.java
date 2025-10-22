@@ -8,6 +8,8 @@ public class DriverService {
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
 
+    private static WebDriver driver; 
+
     public WebDriver getDriverChrome() {
         return new ChromeDriver();
     }
@@ -20,10 +22,15 @@ public class DriverService {
         DriverService ds = new DriverService();
 
         if (driverType.equalsIgnoreCase(CHROME)) {
-            return ds.getDriverChrome();
+            driver = ds.getDriverChrome(); 
         } else {
-            return ds.getDriverFirefox();
+            driver = ds.getDriverFirefox();
         }
 
+        return driver;
+    }
+
+    public static WebDriver getDriver() {
+        return driver;
     }
 }
