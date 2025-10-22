@@ -42,12 +42,12 @@
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>7.10.2</version>
-      <scope>test</scope>
+      <scope>compile</scope>
     </dependency>
 <dependency>
   <groupId>org.projectlombok</groupId>
   <artifactId>lombok</artifactId>
-  <version>1.18.28</version> <!-- versi terbaru saat ini -->
+  <version>1.18.28</version> 
   <scope>provided</scope>
 </dependency>
   </dependencies>
@@ -74,21 +74,7 @@
           <suiteXmlFiles>
             <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
           </suiteXmlFiles>
-          <properties>
-            <property>
-              <name>usedefaultlisteners</name>
-              <value>false</value>
-            </property>
-            <property>
-              <name>listener</name>
-              <value>org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter</value>
-            </property>
-          </properties>
-          <workingDirectory>target/</workingDirectory>
-          <systemPropertyVariables>
-            <org.uncommons.reportng.escape-output>false</org.uncommons.reportng.escape-output>
-            <org.uncommons.reportng.title>TAJuaraCoding Test Report</org.uncommons.reportng.title>
-          </systemPropertyVariables>
+          
         </configuration>
       </plugin>
 

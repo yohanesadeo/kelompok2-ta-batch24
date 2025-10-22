@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import com.juaracoding.dikahadir.utils.DriverService;
+import org.testng.Assert;
 
 public class ResetFilterAction implements CompositeAction {
     private boolean completed = false;

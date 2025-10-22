@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.juaracoding.dikahadir.utils.DriverService;
+import org.testng.Assert;
 
 public class StatusCheckAction implements CompositeAction {
     private final List<String> expectedStatuses;
