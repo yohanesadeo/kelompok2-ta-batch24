@@ -3,6 +3,7 @@ package com.juaracoding.dikahadir.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions; // <-- Import Actions
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -12,27 +13,23 @@ public class AddEditShiftingModalPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // ================== LOCATORS MODAL (SESUAI GAMBAR) ==================
+    // ================== LOCATORS MODAL ==================
     public By modalTitle = By.xpath("//h2[contains(text(), 'Tambah Shifting')]");
     public By inputNamaShift = By.xpath("//input[@placeholder='Nama jam kerja']");
     public By inputCodeShifting = By.xpath("//input[@placeholder='Code Shifting']");
-
-    // Dropdown 'Pilih Unit'
     public By dropdownPilihUnit = By.xpath("//label[text()='Pilih Unit']/following-sibling::div/div");
-
-    // Ikon Jam (untuk membuka clock picker)
     public By iconJamMasuk = By.xpath("//label[text()='Jam Masuk']/..//button");
     public By iconJamKeluar = By.xpath("//label[text()='Jam Keluar']/..//button");
     public By iconBreakStart = By.xpath("//label[text()='Break Start']/..//button");
     public By iconBreakEnd = By.xpath("//label[text()='Break End']/..//button");
-
-    // Tombol di dalam Clock Picker
-    private By clockOkButton = By.xpath("//button[normalize-space()='OK']"); // Ganti 'OK' jika beda
-
-    // Tombol Modal
+    // Tombol OK tidak diperlukan lagi
+    // private By clockOkButton = By.xpath("//button[normalize-space()='OK']");
     public By tambahButton = By.xpath("//button[normalize-space()='Tambah']");
     public By batalButton = By.xpath("//button[normalize-space()='Batal']");
-    public By closeButton = By.xpath("//button[@aria-label='close']"); // Tombol X
+    public By closeButton = By.xpath("//button[@aria-label='close']");
+
+    // Locator untuk titik tengah jam (pin) - PENTING untuk drag
+    private By clockPin = By.xpath("//div[contains(@class,'MuiClock-pin')]");
 
     // ================== CONSTRUCTOR ==================
     public AddEditShiftingModalPage(WebDriver driver) {
@@ -42,6 +39,8 @@ public class AddEditShiftingModalPage {
 
     // ================== MODAL ACTIONS / METHODS ==================
 
+    // ... (isModalDisplayed, inputNamaShift, inputCodeShifting, selectUnit tetap
+    // sama) ...
     public boolean isModalDisplayed() {
         try {
             return wait.until(ExpectedConditions.visibilityOfElementLocated(modalTitle)).isDisplayed();
@@ -58,44 +57,65 @@ public class AddEditShiftingModalPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(inputCodeShifting)).sendKeys(code);
     }
 
-    /**
-     * Metode untuk memilih unit dari dropdown.
-     * 
-     * @param unitName Nama unit yang ingin dipilih (harus persis).
-     */
     public void selectUnit(String unitName) {
-        // 1. Klik dropdown untuk membuka list
         wait.until(ExpectedConditions.elementToBeClickable(dropdownPilihUnit)).click();
-
-        // 2. Tentukan locator untuk opsinya (biasanya <li> di dalam <ul>)
-        By unitOption = By.xpath(String.format("//ul[@role='listbox']//li[text()='%s']", "1 edit"));
-
-        // 3. Tunggu opsi muncul dan klik
+        By unitOption = By.xpath(String.format("//ul[@role='listbox']//li[text()='%s']", unitName));
         wait.until(ExpectedConditions.elementToBeClickable(unitOption)).click();
     }
 
     /**
-     * Metode internal untuk memilih jam dan menit dari clock picker.
+     * Metode internal untuk memilih jam dan menit menggunakan drag-and-drop
+     * Actions.
+     * (PERBAIKAN: Menggunakan Actions clickAndHold...release)
      */
     private void selectTime(By clockIconLocator, String hour, String minute) {
-        // 1. Klik ikon jam untuk membuka picker
-        wait.until(ExpectedConditions.elementToBeClickable(clockIconLocator)).click();
+        try {
+            // 1. Klik ikon jam untuk membuka picker
+            wait.until(ExpectedConditions.elementToBeClickable(clockIconLocator)).click();
 
-        // 2. Tentukan locator untuk jam (angka di lingkaran)
-        By clockHour = By.xpath(String.format("//span[contains(@class, 'MuiClockNumber-root')][text()='%s']", hour));
+            // 2. Tunggu picker muncul (tunggu pin tengah) dan beri jeda animasi
+            WebElement pinElement = wait.until(ExpectedConditions.visibilityOfElementLocated(clockPin));
+            Thread.sleep(500); // Jeda untuk animasi
 
-        // 3. Klik jam
-        wait.until(ExpectedConditions.elementToBeClickable(clockHour)).click();
+            // 3. Siapkan Actions
+            Actions actions = new Actions(driver);
 
-        // 4. Tentukan locator untuk menit
-        By clockMinute = By
-                .xpath(String.format("//span[contains(@class, 'MuiClockNumber-root')][text()='%s']", minute));
+            // 4. Tentukan locator untuk ANGKA jam target
+            By clockHourTarget = By.xpath(String.format("//span[@aria-label='%s hours']", hour));
+            WebElement hourTargetElement = wait.until(ExpectedConditions.presenceOfElementLocated(clockHourTarget));
 
-        // 5. Klik menit
-        wait.until(ExpectedConditions.elementToBeClickable(clockMinute)).click();
+            // 5. Lakukan drag dari pin tengah ke angka jam target (Kemungkinan Gagal karena
+            // Mask)
+            actions.clickAndHold(pinElement) // Klik dan tahan pin tengah
+                    .moveToElement(hourTargetElement) // Geser ke angka jam
+                    .release() // Lepaskan di angka jam
+                    .perform(); // Lakukan aksi
 
-        // 6. Klik OK untuk konfirmasi
-        wait.until(ExpectedConditions.elementToBeClickable(clockOkButton)).click();
+            // 6. Beri jeda untuk transisi ke menit
+            Thread.sleep(500);
+
+            // 7. Tentukan locator untuk ANGKA menit target
+            By clockMinuteTarget = By.xpath(String.format("//span[@aria-label='%s minutes']", minute));
+            WebElement minuteTargetElement = wait.until(ExpectedConditions.presenceOfElementLocated(clockMinuteTarget));
+
+            // 8. Lakukan drag dari pin tengah ke angka menit target (Kemungkinan Gagal
+            // karena Mask)
+            // Pin element mungkin perlu dicari ulang jika DOM berubah
+            pinElement = wait.until(ExpectedConditions.visibilityOfElementLocated(clockPin));
+            actions.clickAndHold(pinElement) // Klik dan tahan pin tengah lagi
+                    .moveToElement(minuteTargetElement) // Geser ke angka menit
+                    .release() // Lepaskan di angka menit
+                    .perform(); // Lakukan aksi
+
+            // 9. Tidak perlu klik OK, picker menutup otomatis
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println("Thread sleep interrupted: " + e.getMessage());
+        } catch (Exception e) {
+            // Tangkap exception lain (misal: ElementClickIntercepted) dan laporkan
+            System.err.println("Error during selectTime using Actions: " + e.getMessage());
+        }
     }
 
     // Metode publik untuk mempermudah pemanggilan
@@ -127,3 +147,6 @@ public class AddEditShiftingModalPage {
         wait.until(ExpectedConditions.elementToBeClickable(closeButton)).click();
     }
 }
+
+// Jangan lupa tambahkan: import org.testng.Assert; (atau JUnit) di bagian atas
+// file test Anda
