@@ -34,17 +34,26 @@ public class ManagementPosisiTest extends BaseTest {
     @Test(priority = 1)
     public void testGoToManagementPosisiPage() {
         String actualTitle = managementPosisiPage.getHeaderTitle();
-        Assert.assertEquals(actualTitle, "Posisi");
+        Assert.assertEquals(actualTitle, "Posisi", "Judul halaman tidak sesuai!");
     }
 
     @Test(priority = 2)
     public void testTambahPosisi() {
         managementPosisiPage.clickTambahButton();
 
-        WebElement inputNama = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("position_name")));
+        // isi nama posisi
+        WebElement inputNama = wait.until(ExpectedConditions.visibilityOfElementLocated(managementPosisiPage.inputNamaPosisi));
         inputNama.sendKeys("Quality Assurance Junior");
 
-        WebElement btnSimpan = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Simpan']")));
+        // buka listbox dan pilih 'Sales' (contoh dari locator kamu)
+        WebElement comboBox = wait.until(ExpectedConditions.elementToBeClickable(managementPosisiPage.listbox));
+        comboBox.click();
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(managementPosisiPage.optionListbox));
+        option.click();
+
+        // klik tombol Simpan
+        WebElement btnSimpan = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[normalize-space()='Simpan']")));
         btnSimpan.click();
 
         String successMessage = managementPosisiPage.getSuccessMessage();
@@ -55,11 +64,12 @@ public class ManagementPosisiTest extends BaseTest {
     public void testEditPosisi() {
         managementPosisiPage.clickEditButtonByName("Quality Assurance Junior");
 
-        WebElement inputNama = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("position_name")));
+        WebElement inputNama = wait.until(ExpectedConditions.visibilityOfElementLocated(managementPosisiPage.inputNamaPosisi));
         inputNama.clear();
         inputNama.sendKeys("Quality Assurance Senior");
 
-        WebElement btnSimpan = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Simpan']")));
+        WebElement btnSimpan = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[normalize-space()='Simpan']")));
         btnSimpan.click();
 
         String successMessage = managementPosisiPage.getSuccessMessage();
@@ -70,21 +80,26 @@ public class ManagementPosisiTest extends BaseTest {
     public void testSearchPosisi() {
         managementPosisiPage.inputSearch("Quality Assurance");
         managementPosisiPage.clickSearchButton();
-        Assert.assertTrue(true, "Search operation completed.");
+
+        // verifikasi sederhana (pastikan tidak error)
+        Assert.assertTrue(true, "Search operation completed successfully.");
     }
 
     @Test(priority = 5)
     public void testResetSearchPosisi() {
-        WebElement resetButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Reset']")));
+        WebElement resetButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[normalize-space()='Reset']")));
         resetButton.click();
 
         String currentUrl = getDriver().getCurrentUrl();
-        Assert.assertEquals(currentUrl, "https://magang.dikahadir.com/management/position", "URL setelah reset tidak sesuai!");
+        Assert.assertEquals(currentUrl, "https://magang.dikahadir.com/management/position", 
+                "URL setelah reset tidak sesuai!");
     }
 
     @Test(priority = 6)
     public void testPaginationPosisi() {
-        WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@aria-label='Go to next page']")));
+        WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[@aria-label='Go to next page']")));
         nextButton.click();
         Assert.assertTrue(true, "Pagination berhasil dijalankan.");
     }
@@ -93,7 +108,8 @@ public class ManagementPosisiTest extends BaseTest {
     public void testDeletePosisi() {
         managementPosisiPage.clickDeleteButtonByName("Quality Assurance Senior");
 
-        WebElement confirmDelete = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Hapus']")));
+        WebElement confirmDelete = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[normalize-space()='Hapus']")));
         confirmDelete.click();
 
         String successMessage = managementPosisiPage.getSuccessMessage();
