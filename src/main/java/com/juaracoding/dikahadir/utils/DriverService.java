@@ -1,36 +1,31 @@
 package com.juaracoding.dikahadir.utils;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverService {
-    public static final String CHROME = "chrome";
-    public static final String FIREFOX = "firefox";
+    private WebDriver driver;
 
-    private static WebDriver driver; 
+    public DriverService() {
+        // Create an object of Firefox Options class
+        // FirefoxOptions options = new FirefoxOptions();
+        // Set Firefox Headless mode as TRUE
+        // options.addArguments("-headless");
 
-    public WebDriver getDriverChrome() {
-        return new ChromeDriver();
+        // Create an object of WebDriver class and pass the Firefox Options object
+        // as an argument
+        driver = new FirefoxDriver(); // masukan options jika ingin headless
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
     }
 
-    public WebDriver getDriverFirefox() {
-        return new FirefoxDriver();
-    }
-
-    public static WebDriver driverManager(String driverType) {
-        DriverService ds = new DriverService();
-
-        if (driverType.equalsIgnoreCase(CHROME)) {
-            driver = ds.getDriverChrome(); 
-        } else {
-            driver = ds.getDriverFirefox();
-        }
-
+    public WebDriver getDriver() {
         return driver;
     }
 
-    public static WebDriver getDriver() {
-        return driver;
+    public void quitDriver() {
+        driver.quit();
     }
 }

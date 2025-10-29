@@ -1,0 +1,14 @@
+Feature: Search Shifting
+   Modul : Management - Shifting
+   Fitur : Pencarian
+
+  @TC-0001
+  Scenario Outline: Verifikasi bahwa pengguna dapat mencari absen point berdasarkan nama
+    Given Pengguna sudah login dan berada di halaman Shifting
+    When Masukkan nama "<nama>" yang valid pada kolom pencarian Shifting
+    And pengguna klik tombol Search
+    Then Shifting "<nama>" muncul di baris pertama
+
+    Examples:
+      | nama |
+      | Andi |
